@@ -58,7 +58,7 @@ gulp.task('transpile', ['clean-scripts'], function() {
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(uglify())
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('./public'));
 });
 
 /*
@@ -82,9 +82,9 @@ gulp.task('html', ['clean-html'], function() {
  * Watch for when JS, HTML, or SCSS files change so they can be updated
  */
 gulp.task('watch', function() {
-  gulp.watch('source/js/**/*.js', ['transpile']);
+  gulp.watch('source/**/*.js', ['transpile']);
   gulp.watch('source/**/*.html', ['html']);
-  gulp.watch('source/sass/**/*.scss', ['sass']);
+  gulp.watch('source/**/*.scss', ['sass']);
 });
 
 gulp.task('build', ['sass', 'html', 'transpile']);

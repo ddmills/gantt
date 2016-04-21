@@ -10,6 +10,38 @@
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
-        <script src="/js/main.js"></script>
+        <div class="container">
+            <h3>Stages</h3>
+            <div class="stage-chart">
+                <div class="scale">
+                    <div class="scale-title">
+                    </div>
+                    <div class="scale-cells">
+                        <div
+                            class="scale-cell"
+                            v-for="scale in scaleCells"
+                            v-bind:style="cellStyle"
+                        >
+                            {{ scale.amount }}
+                        </div>
+                    </div>
+                </div>
+                <div class="bay" v-for="bay in bays">
+                    <div class="bay-title">
+                        {{ bay.name }}
+                    </div>
+                    <div class="stages">
+                        <stage v-for="stage in bay.stages" :stage="stage"></stage>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="x/template" id="stage-template">
+            <div class="stage" v-bind:style="style">
+                Stage {{ stage.stageNo }}
+            </div>
+        </script>
+        <script src="/main.js"></script>
     </body>
 </html>
