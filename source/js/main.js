@@ -15,7 +15,6 @@ Vue.component('stage', {
             return Math.ceil(this.stage.progress/this.stage.duration * 10000)/100 + '%';
         },
         statusClass: function() {
-            console.log(`stage-status-${this.stage.status}`);
             return `stage-status-${this.stage.status}`;
         },
         style: function() {

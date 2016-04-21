@@ -1,12 +1,14 @@
-@import 'normalize';
-@import 'util';
-
 $stage-height: 30px;
 $scale-height: 20px;
 
 $border-col: #cac8bd;
 $scale-col: #F4F2EA;
 $scale-text-col: #4f4e4b;
+
+@import 'normalize';
+@import 'util';
+@import 'stages';
+
 
 * { box-sizing: border-box; }
 
@@ -82,57 +84,4 @@ $scale-text-col: #4f4e4b;
 
 .stage-row:not(:last-child) {
     border-bottom: 1px dashed #ccc;
-}
-
-.stage {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-    width: 10%;
-    height: $stage-height;
-    line-height: $stage-height;
-
-    font-size: 11px;
-
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 2px;
-
-    cursor: pointer;
-    overflow: hidden;
-}
-
-@mixin stage-status($color, $background) {
-    background-color: $background;
-    border-color: darken($background, 20%);
-    color: $color;
-
-    & .stage-progress {
-        background-color: darken($background, 10%);
-    }
-}
-
-.stage-progress {
-    padding-left: 4px;
-}
-
-.stage-status-pending {
-    @include stage-status(#464646, rgb(242, 244, 209));
-}
-
-.stage-status-started {
-    @include stage-status(#1b1357, rgba(223, 238, 221, 1));
-}
-
-.stage-status-ready {
-    @include stage-status(#3d1717, rgba(238, 219, 232, 1));
-}
-
-.stage-status-active {
-    @include stage-status(#ecf9ed, rgba(53, 148, 53, 1));
-}
-
-.stage-status-scheduled {
-    @include stage-status(#1f3262, rgba(242, 242, 242, 1));
 }
