@@ -8,9 +8,16 @@ var baySeeder = new BaySeeder();
 var bays = baySeeder.seed(5);
 
 Vue.component('stage', {
-    props: ['stage', 'style'],
+    props: ['stage', 'style', 'progress'],
     template: '#stage-template',
     computed: {
+        progress: function() {
+            return Math.ceil(this.stage.progress/this.stage.duration * 10000)/100 + '%';
+        },
+        statusClass: function() {
+            console.log(`stage-status-${this.stage.status}`);
+            return `stage-status-${this.stage.status}`;
+        },
         style: function() {
             var hours = this.stage.duration;
             var totalHour = this.$parent.range.asHours();
@@ -21,10 +28,28 @@ Vue.component('stage', {
             var left = offset / totalHour * 100;
 
             return {
-                color: 'blue',
                 width: width + '%',
                 left: left + '%'
             };
+        }
+    },
+    methods: {
+        dragStart: function(e) {
+            e.dataTransfer.setDragImage(new Image(), 0, 0);
+            // console.log('grab', e);
+        },
+        dragging: function(e) {
+            var width = this.$parent.$el.offsetWidth;
+            var offset = e.clientX - this.$parent.$el.offsetLeft;
+            var range = this.$parent.range.asHours();
+
+            if (offset > 0) {
+                var hour = Math.ceil(range * (offset/width));
+                this.stage.startDate = moment().hours(hour);
+            }
+        },
+        dragEnd: function(e) {
+            // console.log('release', e);
         }
     }
 });
@@ -36,8 +61,8 @@ var vm = new Vue({
         endDate: moment().add(1, 'day').startOf('day').hours(15),
         scale: {
             unit: 'hours',
-            amount: 1,
-            width: '10%'
+            amount: 4,
+            width: '12%'
         },
         bays: bays
     },
@@ -53,7 +78,6 @@ var vm = new Vue({
         scaleCells: function() {
             var totalUnits = (this.range.as(this.scale.unit))/this.scale.amount;
             var startUnit = this.startDate[this.scale.unit]();
-            console.log(startUnit);
 
             var cells = [];
 

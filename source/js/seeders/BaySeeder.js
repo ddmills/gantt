@@ -6,7 +6,8 @@ var
 
 module.exports = class BaySeeder
 {
-    constructor() {
+    constructor()
+    {
         this.stageSeeder = new StageSeeder();
     }
 
@@ -17,7 +18,7 @@ module.exports = class BaySeeder
         for (var i = 0; i < num; i++) {
             var bay = new Bay({
                 'shop': 'Service',
-                'name': 'Bay-i',
+                'name': `Bay-${i}`,
                 'technicianCount': 1
             });
 

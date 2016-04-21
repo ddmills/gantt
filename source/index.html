@@ -38,8 +38,24 @@
         </div>
 
         <script type="x/template" id="stage-template">
-            <div class="stage" v-bind:style="style">
-                Stage {{ stage.stageNo }}
+            <div class="stage-row">
+                <div
+                    class="stage"
+                    v-bind:style="style"
+                    v-bind:class="statusClass"
+                    v-on:dragstart="dragStart"
+                    v-on:drag="dragging"
+                    v-on:dragend="dragEnd"
+                    draggable="true"
+                >
+                    <div
+                        class="stage-progress"
+                        v-bind:style="{ width: progress }"
+                    >
+                        {{ progress }}
+                    </div>
+                    Stage {{ stage.stageNo }}
+                </div>
             </div>
         </script>
         <script src="/main.js"></script>

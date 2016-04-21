@@ -1,7 +1,7 @@
 @import 'normalize';
 @import 'util';
 
-$bay-height: 30px;
+$stage-height: 30px;
 $scale-height: 20px;
 
 $border-col: #cac8bd;
@@ -33,15 +33,15 @@ $scale-text-col: #4f4e4b;
 
 .scale-title {
     float: left;
-    width: 20%;
+    width: 10%;
     height: $scale-height;
-    border-right: 1px solid $border-col;
 }
 
 .scale-cells {
+    border-left: 1px solid $border-col;
     position: relative;
     float: right;
-    width: 80%;
+    width: 90%;
 }
 
 .scale-cell {
@@ -56,22 +56,32 @@ $scale-text-col: #4f4e4b;
 .bay {
     display: block;
     border-bottom: 1px solid $border-col;
-    height: $bay-height;
     @include clearfix();
 }
 
 .bay-title {
     float: left;
-    width: 20%;
-    height: $bay-height;
-    border-right: 1px solid $border-col;
+    width: 10%;
     padding: 3px;
 }
 
 .stages {
     position: relative;
     float: right;
-    width: 80%;
+    height: 100%;
+    width: 90%;
+    border-left: 1px solid $border-col;
+    overflow: hidden;
+}
+
+.stage-row {
+    position: relative;
+    height: $stage-height;
+    width: 100%;
+}
+
+.stage-row:not(:last-child) {
+    border-bottom: 1px dashed #ccc;
 }
 
 .stage {
@@ -80,11 +90,49 @@ $scale-text-col: #4f4e4b;
     top: 0;
     left: 0;
     width: 10%;
-    height: $bay-height;
+    height: $stage-height;
+    line-height: $stage-height;
 
-    background-color: orange;
-    border: 1px solid red;
+    font-size: 11px;
 
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+
+    cursor: pointer;
     overflow: hidden;
-    text-align: center;
+}
+
+@mixin stage-status($color, $background) {
+    background-color: $background;
+    border-color: darken($background, 20%);
+    color: $color;
+
+    & .stage-progress {
+        background-color: darken($background, 10%);
+    }
+}
+
+.stage-progress {
+    padding-left: 4px;
+}
+
+.stage-status-pending {
+    @include stage-status(#464646, rgb(242, 244, 209));
+}
+
+.stage-status-started {
+    @include stage-status(#1b1357, rgba(223, 238, 221, 1));
+}
+
+.stage-status-ready {
+    @include stage-status(#3d1717, rgba(238, 219, 232, 1));
+}
+
+.stage-status-active {
+    @include stage-status(#ecf9ed, rgba(53, 148, 53, 1));
+}
+
+.stage-status-scheduled {
+    @include stage-status(#1f3262, rgba(242, 242, 242, 1));
 }

@@ -10,7 +10,7 @@ module.exports = class StageSeeder
     seed(num = 4, attributes)
     {
         var stages = [];
-        var progresses = [
+        var statuses = [
             'pending',
             'started',
             'ready',
@@ -19,13 +19,20 @@ module.exports = class StageSeeder
         ];
 
         for (var i = 0; i < num; i++) {
+            var hour = underscore.random(8, 24);
+            var duration = underscore.random(1, 8);
+            var progress = underscore.random(0, duration);
+
+            console.log(progress/duration);
+
             var stage = new Stage({
-                startDate: moment(),
+                startDate: moment().hour(hour),
                 lockStartDate: false,
-                duration: 4,
+                duration: duration,
                 orderNo: '123432',
+                progress: progress,
                 stageNo: '3',
-                progress: underscore.sample(progresses),
+                status: underscore.sample(statuses),
                 bay: attributes.bay
             });
 
