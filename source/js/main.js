@@ -1,0 +1,1 @@
+var vue = require('vue');
