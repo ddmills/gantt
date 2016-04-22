@@ -11,7 +11,7 @@ module.exports = class StageSeeder
     {
         var stages = [];
         var statuses = [
-            'pending',
+            // 'pending',
             'started',
             'ready',
             'active',

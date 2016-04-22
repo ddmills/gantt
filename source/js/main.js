@@ -57,17 +57,37 @@ var vm = new Vue({
     el: '.stage-chart',
     data: {
         startDate: moment().startOf('day').hours(8),
-        endDate: moment().add(1, 'day').startOf('day').hours(15),
+        endDate: moment().add(10, 'day').startOf('day').hours(15),
         scale: {
             unit: 'hours',
             amount: 4,
             width: '100px'
         },
+        hourScale: 4,
         bays: bays
     },
     computed: {
         range: function() {
             return moment.duration(this.endDate.diff(this.startDate));
+        },
+        dayCells: function() {
+            var days = [];
+            var totalDays = this.range.as('days');
+
+            for (var i = 0; i < totalDays; i++) {
+                var day = this.startDate.clone().startOf('day').hours(0).add(i, 'days');
+                days.push(day);
+            }
+
+            return days;
+        },
+        hourCells: function() {
+            return ['8:00', '12:00'];
+        },
+        hourStyle: function() {
+            return {
+                width: '50%'
+            };
         },
         cellStyle: function() {
             return {

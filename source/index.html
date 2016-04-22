@@ -15,13 +15,23 @@
                 <div class="scale">
                     <div class="scale-title">
                     </div>
-                    <div class="scale-cells">
-                        <div
-                            class="scale-cell"
-                            v-for="scale in scaleCells"
-                            v-bind:style="cellStyle"
+                    <div class="timeline-days">
+                        <div class="timeline-day-cell"
+                            v-for="day in dayCells"
                         >
-                            {{ scale.amount }}
+                            <span class="timeline-day">
+                                {{ day.format('dddd') }}<br>
+                                {{ day.format('MMMM Do') }}
+                            </span>
+                            <div class="timeline-hours">
+                                <div
+                                    class="timeline-hour-cell"
+                                    v-for="hour in hourCells"
+                                    v-bind:style="hourStyle"
+                                >
+                                    {{ hour }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

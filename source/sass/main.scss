@@ -19,23 +19,27 @@
 }
 
 .scale {
-    display: block;
+    position: relative;
+    display: table;
+    width: 100%;
     height: $scale-height;
     border-bottom: 1px solid $border-col;
     background-color: $scale-col;
-    overflow: hidden;
     @include clearfix();
 }
 
-.bay-title,
 .scale-title {
+    position: relative;
+    display: table-cell;
+    padding: 3px;
+    width: 320px;
+    height: 100%;
+}
+
+.bay-title {
     display: table-cell;
     padding: 3px;
     width: 120px;
-}
-
-.scale-title {
-    height: $scale-height;
 }
 
 .scale-cells {
@@ -65,4 +69,38 @@
     width: 100%;
     border-bottom: 1px solid $border-col;
     @include clearfix();
+}
+
+.timeline-days {
+    display: table;
+    width: 100%;
+    position: relative;
+    border-left: 1px solid $border-col;
+}
+
+.timeline-day-cell {
+    display: table-cell;
+    width: auto;
+    position: relative;
+}
+
+.timeline-day-cell:not(:last-child) {
+    border-right: 1px solid $border-col;
+}
+
+.timeline-day {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 4px 0px;
+}
+
+.timeline-hour-cell {
+    float: left;
+    text-align: center;
+    font-size: 12px;
+}
+
+.timeline-hour-cell:not(:last-child)  {
+    border-right: 1px solid $border-col;
 }
