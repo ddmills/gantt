@@ -38,7 +38,7 @@
                 <div class="bay" v-for="bay in bays">
                     <div class="bay-title">
                         {{ bay.name }}
-                        <button v-on:click="autoSchedule(bay)">Auto Schedule</button>
+                        <button v-on:click="autoSchedule(bay)" class="btn btn-primary">Auto Schedule</button>
                     </div>
                     <div class="stages">
                         <stage v-for="stage in bay.stages" :stage="stage"></stage>
