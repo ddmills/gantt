@@ -1,9 +1,9 @@
 var
-    Bay = require('../models/Bay'),
+    Bay         = require('../models/Bay'),
     StageSeeder = require('../seeders/StageSeeder'),
-    moment = require('moment'),
-    underscore = require('underscore'),
-    faker = require('faker')
+    moment      = require('moment'),
+    underscore  = require('underscore'),
+    faker       = require('faker')
 ;
 
 module.exports = class BaySeeder

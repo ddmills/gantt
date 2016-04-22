@@ -1,8 +1,8 @@
 var
-    Stage = require('../models/Stage'),
-    moment = require('moment'),
+    Stage      = require('../models/Stage'),
+    moment     = require('moment'),
     underscore = require('underscore'),
-    faker = require('faker')
+    faker      = require('faker')
 ;
 
 module.exports = class StageSeeder
@@ -19,8 +19,8 @@ module.exports = class StageSeeder
         ];
 
         for (var i = 0; i < num; i++) {
-            var hour = underscore.random(8, 24);
-            var duration = underscore.random(2, 8);
+            var hour = underscore.random(8, 15);
+            var duration = underscore.random(4, 8);
             var stageNo = underscore.random(1, 8);
             var status = underscore.sample(statuses);
             var progress = 0;
@@ -32,7 +32,7 @@ module.exports = class StageSeeder
             if (status == 'active' || status == 'started') progress = underscore.random(1, duration - 1);
 
             var stage = new Stage({
-                startDate: moment().hour(hour),
+                startDate: moment().startOf('day').hour(hour),
                 lockStartDate: false,
                 duration: duration,
                 orderNo: faker.random.number(),

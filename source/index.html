@@ -58,6 +58,7 @@
                         class="stage"
                         v-bind:style="style"
                         v-bind:class="statusClass"
+                        v-on:click="handleClick"
                         v-on:dragstart="dragStart"
                         v-on:drag="dragging"
                         v-on:dragend="dragEnd"

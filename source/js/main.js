@@ -1,14 +1,25 @@
 var
     BaySeeder = require('./seeders/BaySeeder'),
-    moment = require('moment'),
-    Vue    = require('vue')
+    moment    = require('moment'),
+    Vue       = require('vue'),
+    Business  = require('serious-business-time')
 ;
+
+var business = Business.createInstance(moment,{
+    0: null,
+    1: ['08:00:00', '16:00:00'],
+    2: ['08:00:00', '16:00:00'],
+    3: ['08:00:00', '16:00:00'],
+    4: ['08:00:00', '16:00:00'],
+    5: ['08:00:00', '16:00:00'],
+    6: null
+});
 
 var baySeeder = new BaySeeder();
 var bays = baySeeder.seed(3);
 
 Vue.component('stage', {
-    props: ['stage', 'style', 'progress'],
+    props: ['stage', 'style', 'progress', 'clickOffset'],
     template: '#stage-template',
     computed: {
         progress: function() {
@@ -19,12 +30,11 @@ Vue.component('stage', {
         },
         style: function() {
             var hours = this.stage.duration;
-            var totalHour = this.$parent.range.asHours();
+            var totalHour = this.$parent.workingDays * 8;
             var width = hours / totalHour * 100;
 
-            var offset = moment.duration(this.stage.startDate.diff(this.$parent.startDate)).asHours();
-
-            var left = offset / totalHour * 100;
+            var diff = business.workingDiff(this.stage.startDate, this.$parent.startDate, 'hours');
+            var left = diff / totalHour * 100;
 
             return {
                 width: width + '%',
@@ -33,22 +43,24 @@ Vue.component('stage', {
         }
     },
     methods: {
+        handleClick: function(e) {
+        },
         dragStart: function(e) {
+            this.clickOffset = e.clientX;
+            console.log(this.clickOffset);
             e.dataTransfer.setDragImage(new Image(), 0, 0);
-            // console.log('grab', e);
         },
         dragging: function(e) {
-            var width = this.$parent.$el.offsetWidth;
-            var offset = e.clientX - this.$parent.$el.offsetLeft;
-            var range = this.$parent.range.asHours();
+            var width = this.$parent.$el.offsetWidth - 323;
+            var offset = e.clientX - this.$parent.$el.offsetLeft - 320;
+            var range = this.$parent.workingDays * 8;
 
             if (offset > 0) {
-                var hour = Math.ceil(range * (offset/width));
-                this.stage.startDate = moment().hours(hour);
+                var hour = Math.round(range * (offset/width));
+                this.stage.startDate = business.addWorkingTime(this.$parent.startDate, hour, 'hours');
             }
         },
         dragEnd: function(e) {
-            // console.log('release', e);
         }
     }
 });
@@ -57,18 +69,25 @@ var vm = new Vue({
     el: '.stage-chart',
     data: {
         startDate: moment().startOf('day').hours(8),
-        endDate: moment().add(10, 'day').startOf('day').hours(15),
-        scale: {
-            unit: 'hours',
-            amount: 4,
-            width: '100px'
-        },
-        hourScale: 4,
+        endDate: moment().add(8, 'day').startOf('day').hours(15),
         bays: bays
     },
     computed: {
         range: function() {
             return moment.duration(this.endDate.diff(this.startDate));
+        },
+        workingDays: function() {
+            var days = [];
+            var totalDays = this.range.as('days');
+
+            for (var i = 0; i < totalDays; i++) {
+                var day = this.startDate.clone().startOf('day').hours(0).add(i, 'days');
+                if (business.isWorkingDay(day)) {
+                    days++;
+                }
+            }
+
+            return days;
         },
         dayCells: function() {
             var days = [];
@@ -76,7 +95,9 @@ var vm = new Vue({
 
             for (var i = 0; i < totalDays; i++) {
                 var day = this.startDate.clone().startOf('day').hours(0).add(i, 'days');
-                days.push(day);
+                if (business.isWorkingDay(day)) {
+                    days.push(day);
+                }
             }
 
             return days;
@@ -86,30 +107,10 @@ var vm = new Vue({
         },
         hourStyle: function() {
             return {
-                width: '50%'
+                width: '50%',
+                maxWidth: '50%',
             };
         },
-        cellStyle: function() {
-            return {
-                width: this.scale.width
-            };
-        },
-        scaleCells: function() {
-            var totalUnits = (this.range.as(this.scale.unit))/this.scale.amount;
-            var startUnit = this.startDate[this.scale.unit]();
-
-            var cells = [];
-
-            for (var i = 0; i < totalUnits; i++) {
-                var amount = (startUnit + (i * this.scale.amount)) % 24;
-
-                cells.push({
-                    'amount': amount + ':00'
-                });
-            }
-
-            return cells;
-        }
     },
     methods: {
         autoSchedule: function(bay) {
@@ -118,28 +119,28 @@ var vm = new Vue({
             for (var stage of bay.stages) {
                 if (stage.status == 'active') {
                     stage.startDate = start.clone();
-                    start.add(stage.duration, 'hours');
+                    start = business.addWorkingTime(stage.startDate, stage.duration, 'hours');
                 }
             }
 
             for (var stage of bay.stages) {
                 if (stage.status == 'started') {
                     stage.startDate = start.clone();
-                    start.add(stage.duration, 'hours');
+                    start = business.addWorkingTime(stage.startDate, stage.duration, 'hours');
                 }
             }
 
             for (var stage of bay.stages) {
                 if (stage.status == 'ready') {
                     stage.startDate = start.clone();
-                    start.add(stage.duration, 'hours');
+                    start = business.addWorkingTime(stage.startDate, stage.duration, 'hours');
                 }
             }
 
             for (var stage of bay.stages) {
                 if (stage.status == 'scheduled') {
                     stage.startDate = start.clone();
-                    start.add(stage.duration, 'hours');
+                    start = business.addWorkingTime(stage.startDate, stage.duration, 'hours');
                 }
             }
         },

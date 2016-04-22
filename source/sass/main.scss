@@ -14,6 +14,7 @@
 .stage-chart {
     display: block;
     width: 100%;
+    overflow-x: scroll;
     border: 1px solid $border-col;
     margin: 50px auto;
 }
@@ -33,6 +34,7 @@
     display: table-cell;
     padding: 3px;
     width: 320px;
+    min-width: 320px;
     height: 100%;
 }
 
@@ -82,6 +84,7 @@
     display: table-cell;
     width: auto;
     position: relative;
+    min-width: 200px;
 }
 
 .timeline-day-cell:not(:last-child) {
