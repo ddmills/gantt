@@ -5,14 +5,14 @@ var
 ;
 
 var baySeeder = new BaySeeder();
-var bays = baySeeder.seed(5);
+var bays = baySeeder.seed(3);
 
 Vue.component('stage', {
     props: ['stage', 'style', 'progress'],
     template: '#stage-template',
     computed: {
         progress: function() {
-            return Math.ceil(this.stage.progress/this.stage.duration * 10000)/100 + '%';
+            return Math.ceil(this.stage.progress/this.stage.duration * 10000)/100;
         },
         statusClass: function() {
             return `stage-status-${this.stage.status}`;
@@ -61,7 +61,7 @@ var vm = new Vue({
         scale: {
             unit: 'hours',
             amount: 4,
-            width: '12%'
+            width: '100px'
         },
         bays: bays
     },
@@ -90,5 +90,38 @@ var vm = new Vue({
 
             return cells;
         }
+    },
+    methods: {
+        autoSchedule: function(bay) {
+            var start = new moment().startOf('day').hours(8);
+
+            for (var stage of bay.stages) {
+                if (stage.status == 'active') {
+                    stage.startDate = start.clone();
+                    start.add(stage.duration, 'hours');
+                }
+            }
+
+            for (var stage of bay.stages) {
+                if (stage.status == 'started') {
+                    stage.startDate = start.clone();
+                    start.add(stage.duration, 'hours');
+                }
+            }
+
+            for (var stage of bay.stages) {
+                if (stage.status == 'ready') {
+                    stage.startDate = start.clone();
+                    start.add(stage.duration, 'hours');
+                }
+            }
+
+            for (var stage of bay.stages) {
+                if (stage.status == 'scheduled') {
+                    stage.startDate = start.clone();
+                    start.add(stage.duration, 'hours');
+                }
+            }
+        },
     }
 });

@@ -11,7 +11,6 @@
     </head>
     <body>
         <div class="container">
-            <h3>Stages</h3>
             <div class="stage-chart">
                 <div class="scale">
                     <div class="scale-title">
@@ -29,6 +28,7 @@
                 <div class="bay" v-for="bay in bays">
                     <div class="bay-title">
                         {{ bay.name }}
+                        <button v-on:click="autoSchedule(bay)">Auto Schedule</button>
                     </div>
                     <div class="stages">
                         <stage v-for="stage in bay.stages" :stage="stage"></stage>
@@ -39,22 +39,31 @@
 
         <script type="x/template" id="stage-template">
             <div class="stage-row">
-                <div
-                    class="stage"
-                    v-bind:style="style"
-                    v-bind:class="statusClass"
-                    v-on:dragstart="dragStart"
-                    v-on:drag="dragging"
-                    v-on:dragend="dragEnd"
-                    draggable="true"
-                >
+                <div class="stage-info">
+                    {{ stage.customer }}<br>
+                    #{{ stage.orderNo }}, Stage {{ stage.stageNo }}
+                </div>
+                <div class="stage-timeline">
                     <div
-                        class="stage-progress"
-                        v-bind:style="{ width: progress }"
+                        class="stage"
+                        v-bind:style="style"
+                        v-bind:class="statusClass"
+                        v-on:dragstart="dragStart"
+                        v-on:drag="dragging"
+                        v-on:dragend="dragEnd"
+                        draggable="true"
                     >
-                        {{ progress }}
+                        <span class="stage-progress">
+                            {{ progress }}%
+                        </span>
+                        <span class="stage-worktype">
+                            {{ stage.workType }}
+                        </span>
+                        <span
+                            class="stage-progress-meter"
+                            v-bind:style="{ width: progress + '%' }"
+                        ></span>
                     </div>
-                    Stage {{ stage.stageNo }}
                 </div>
             </div>
         </script>

@@ -1,27 +1,21 @@
-$stage-height: 30px;
-$scale-height: 20px;
-
-$border-col: #cac8bd;
-$scale-col: #F4F2EA;
-$scale-text-col: #4f4e4b;
-
+@import 'config';
 @import 'normalize';
 @import 'util';
 @import 'stages';
 
-
 * { box-sizing: border-box; }
 
 .container {
-    width: 980px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 20px;
+    margin-right: 20px;
     @include clearfix();
 }
 
 .stage-chart {
     display: block;
+    width: 100%;
     border: 1px solid $border-col;
+    margin: 50px auto;
 }
 
 .scale {
@@ -33,17 +27,22 @@ $scale-text-col: #4f4e4b;
     @include clearfix();
 }
 
+.bay-title,
 .scale-title {
-    float: left;
-    width: 10%;
+    display: table-cell;
+    padding: 3px;
+    width: 120px;
+}
+
+.scale-title {
     height: $scale-height;
 }
 
 .scale-cells {
-    border-left: 1px solid $border-col;
     position: relative;
-    float: right;
-    width: 90%;
+    display: table-cell;
+    width: auto;
+    border-left: 1px solid $border-col;
 }
 
 .scale-cell {
@@ -52,36 +51,18 @@ $scale-text-col: #4f4e4b;
     text-align: center;
     height: $scale-height;
     color: $scale-text-col;
-    font-size: 12px;
-}
-
-.bay {
-    display: block;
-    border-bottom: 1px solid $border-col;
-    @include clearfix();
+    font-size: 13px;
 }
 
 .bay-title {
-    float: left;
-    width: 10%;
-    padding: 3px;
+    text-align: left;
+    vertical-align: top;
+    background-color: #efefef;
 }
 
-.stages {
-    position: relative;
-    float: right;
-    height: 100%;
-    width: 90%;
-    border-left: 1px solid $border-col;
-    overflow: hidden;
-}
-
-.stage-row {
-    position: relative;
-    height: $stage-height;
+.bay {
+    display: table;
     width: 100%;
-}
-
-.stage-row:not(:last-child) {
-    border-bottom: 1px dashed #ccc;
+    border-bottom: 1px solid $border-col;
+    @include clearfix();
 }

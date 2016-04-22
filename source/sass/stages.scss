@@ -1,3 +1,49 @@
+@import 'config';
+
+.stages {
+    display: table-cell;
+    position: relative;
+    height: 100%;
+    border-left: 1px solid $border-col;
+    overflow: hidden;
+    width: auto;
+}
+
+.stage-row {
+    display: table;
+    width: 100%;
+}
+
+.stage-timeline {
+    display: table-cell;
+    position: relative;
+    width: auto;
+    height: $stage-height + 8px;
+}
+
+.stage-row:not(:last-child) .stage-timeline {
+    border-bottom: 1px dashed #E2E2E2;
+}
+
+.stage-info {
+    position: relative;
+    display: table-cell;
+    width: 200px;
+    max-width: 200px;
+    height: 100%;
+    border-right: 1px solid $border-col;
+    background-color: #efefef;
+    font-size: 13px;
+    padding: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stage-row:not(:last-child) .stage-info {
+    border-bottom: 1px solid $border-col;
+}
+
 .stage {
     position: absolute;
 
@@ -6,6 +52,7 @@
     width: 10%;
     height: $stage-height;
     line-height: $stage-height;
+    margin: 4px 0px;
 
     font-size: 11px;
 
@@ -14,39 +61,72 @@
     border-radius: 2px;
 
     cursor: pointer;
-    overflow: hidden;
+    overflow: visible;
 }
 
 @mixin stage-status($color, $background) {
     background-color: $background;
-    border-color: darken($background, 20%);
+    border-color: darken($background, 30%);
     color: $color;
 
-    & .stage-progress {
-        background-color: darken($background, 10%);
+    & .stage-progress-meter {
+        background-color: transparentize(darken($background, 10%), 0.25);
     }
 }
 
+.stage-worktype {
+    z-index: 100;
+    position: relative;
+    display: block;
+    height: 100%;
+    text-align: center;
+    overflow: hidden;
+    padding: 0px 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stage:hover .stage-progress {
+    opacity: 1;
+}
+
+.stage:hover .stage-worktype  {
+    overflow: visible;
+}
+
 .stage-progress {
-    padding-left: 8px;
+    position: absolute;
+    opacity: 0;
+    left: 100%;
+    width: auto;
+    padding: 0px 5px;
+    color: rgb(29, 84, 149);
+    transition: opacity .1s;
+}
+
+.stage-progress-meter {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .stage-status-pending {
-    @include stage-status(#464646, rgb(242, 244, 209));
+    @include stage-status(#464646, #f2f4d0);
 }
 
 .stage-status-started {
-    @include stage-status(#1b1357, rgba(223, 238, 221, 1));
+    @include stage-status(#1b1357, #e0eede);
 }
 
 .stage-status-ready {
-    @include stage-status(#3d1717, rgba(238, 219, 232, 1));
+    @include stage-status(#3d1717, #eedbe8);
 }
 
 .stage-status-active {
-    @include stage-status(#ecf9ed, rgba(53, 148, 53, 1));
+    @include stage-status(#ecf9ed, #359435);
 }
 
 .stage-status-scheduled {
-    @include stage-status(#1f3262, rgba(242, 242, 242, 1));
+    @include stage-status(#1f3262, #f5f6f6);
 }

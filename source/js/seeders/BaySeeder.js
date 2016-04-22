@@ -1,7 +1,9 @@
 var
     Bay = require('../models/Bay'),
     StageSeeder = require('../seeders/StageSeeder'),
-    moment = require('moment')
+    moment = require('moment'),
+    underscore = require('underscore'),
+    faker = require('faker')
 ;
 
 module.exports = class BaySeeder
@@ -22,7 +24,9 @@ module.exports = class BaySeeder
                 'technicianCount': 1
             });
 
-            bay.stages = this.stageSeeder.seed(4, {'bay': bay});
+            var stageCount = underscore.random(2, 8);
+
+            bay.stages = this.stageSeeder.seed(stageCount, {'bay': bay});
             bays.push(bay);
         }
 
