@@ -29,7 +29,7 @@ module.exports = class StageSeeder
                 statuses = underscore.without(statuses, 'active');
             }
 
-            if (status == 'active' || status == 'started') progress = underscore.random(0, duration - 1);
+            if (status == 'active' || status == 'started') progress = underscore.random(1, duration - 1);
 
             var stage = new Stage({
                 startDate: moment().hour(hour),
