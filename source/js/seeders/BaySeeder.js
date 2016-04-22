@@ -24,7 +24,7 @@ module.exports = class BaySeeder
                 'technicianCount': 1
             });
 
-            var stageCount = underscore.random(2, 8);
+            var stageCount = underscore.random(3, 8);
 
             bay.stages = this.stageSeeder.seed(stageCount, {'bay': bay});
             bays.push(bay);

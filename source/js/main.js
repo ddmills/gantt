@@ -46,13 +46,14 @@ Vue.component('stage', {
         handleClick: function(e) {
         },
         dragStart: function(e) {
-            this.clickOffset = e.clientX;
-            console.log(this.clickOffset);
+            var mouseOffset = e.clientX - (this.$parent.$el.offsetLeft + 320)
+            var elOffset = e.target.offsetLeft;
+            this.clickOffset = mouseOffset - elOffset;
             e.dataTransfer.setDragImage(new Image(), 0, 0);
         },
         dragging: function(e) {
             var width = this.$parent.$el.offsetWidth - 323;
-            var offset = e.clientX - this.$parent.$el.offsetLeft - 320;
+            var offset = (e.clientX - this.clickOffset) - this.$parent.$el.offsetLeft - 320;
             var range = this.$parent.workingDays * 8;
 
             if (offset > 0) {
@@ -118,6 +119,7 @@ var vm = new Vue({
 
             for (var stage of bay.stages) {
                 if (stage.status == 'active') {
+                    // start = business.subtractWorkingTime(start, stage.progress, 'hours');
                     stage.startDate = start.clone();
                     start = business.addWorkingTime(stage.startDate, stage.duration, 'hours');
                 }
@@ -125,6 +127,7 @@ var vm = new Vue({
 
             for (var stage of bay.stages) {
                 if (stage.status == 'started') {
+                    // start = business.subtractWorkingTime(start, stage.progress, 'hours');
                     stage.startDate = start.clone();
                     start = business.addWorkingTime(stage.startDate, stage.duration, 'hours');
                 }

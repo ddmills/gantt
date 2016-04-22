@@ -2,8 +2,19 @@ var
     Stage      = require('../models/Stage'),
     moment     = require('moment'),
     underscore = require('underscore'),
-    faker      = require('faker')
+    faker      = require('faker'),
+    Business  = require('serious-business-time')
 ;
+
+var business = Business.createInstance(moment,{
+    0: null,
+    1: ['08:00:00', '16:00:00'],
+    2: ['08:00:00', '16:00:00'],
+    3: ['08:00:00', '16:00:00'],
+    4: ['08:00:00', '16:00:00'],
+    5: ['08:00:00', '16:00:00'],
+    6: null
+});
 
 module.exports = class StageSeeder
 {
@@ -19,10 +30,14 @@ module.exports = class StageSeeder
         ];
 
         for (var i = 0; i < num; i++) {
-            var hour = underscore.random(8, 15);
+            var hour = underscore.random(0, 8 * 3);
             var duration = underscore.random(4, 8);
             var stageNo = underscore.random(1, 8);
             var status = underscore.sample(statuses);
+
+            var startDate = business.nextWorkingDay(moment().add(-1, 'days')).startOf('day').hour(8);
+            startDate = business.addWorkingTime(startDate, hour, 'hours');
+
             var progress = 0;
 
             if (status == 'active') {
@@ -32,7 +47,7 @@ module.exports = class StageSeeder
             if (status == 'active' || status == 'started') progress = underscore.random(1, duration - 1);
 
             var stage = new Stage({
-                startDate: moment().startOf('day').hour(hour),
+                startDate: startDate,
                 lockStartDate: false,
                 duration: duration,
                 orderNo: faker.random.number(),

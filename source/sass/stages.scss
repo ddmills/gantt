@@ -33,11 +33,12 @@
     height: 100%;
     border-right: 1px solid $border-col;
     background-color: #efefef;
-    font-size: 13px;
+    font-size: 18px;
     padding: 4px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    z-index: 300;
 }
 
 .stage-row:not(:last-child) .stage-info {
@@ -54,7 +55,7 @@
     line-height: $stage-height;
     margin: 4px 0px;
 
-    font-size: 11px;
+    font-size: 18px;
 
     border-style: solid;
     border-width: 1px;
