@@ -1,5 +1,7 @@
 # Gantt
 
+See Demo: [http://ddmills.github.io/gantt/](http://ddmills.github.io/gantt/)
+
 ### setup
 - `npm install`
 - `gulp build`
