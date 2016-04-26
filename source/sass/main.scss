@@ -70,8 +70,11 @@
 .bay {
     display: table;
     width: 100%;
-    border-bottom: 1px solid $border-col;
     @include clearfix();
+}
+
+.bay:not(:last-child) {
+    border-bottom: 1px solid $border-col;
 }
 
 .timeline-days {
