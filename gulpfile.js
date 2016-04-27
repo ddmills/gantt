@@ -96,7 +96,7 @@ gulp.task('deploy', ['build'], function() {
     gutil.log(err);
   });
 
-  gulp.src('./public/*').pipe(gulp.dest('./'));
+  gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
 
   gulp.src('./')
     .pipe(git.add())
