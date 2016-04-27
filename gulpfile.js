@@ -1,8 +1,8 @@
 'use strict';
 
 var
-  gutil      = require('gulp-util'),
   gulp       = require('gulp'),
+  gutil      = require('gulp-util'),
   browserify = require('browserify'),
   babelify   = require('babelify'),
   source     = require('vinyl-source-stream'),
@@ -50,9 +50,12 @@ gulp.task('clean', function() {
  */
 gulp.task('transpile', ['clean-scripts'], function() {
   return browserify('source/js/main.js', { debug : true })
-    .transform('babelify', {presets: ['es2015']})
+    .transform('babelify', { presets: ['es2015'] })
     .bundle()
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+    .on('error', function(err) {
+      gutil.log(err.stack);
+      this.emit('end');
+    })
     .pipe(source('main.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
