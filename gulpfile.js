@@ -92,20 +92,25 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', ['build'], function() {
-  gulp.src('./*')
-    .pipe(git.add())
-    .pipe(git.commit('auto-deploy'));
-
+  gutil.log('checkout');
   git.checkout('gh-pages', function(err) {
     gutil.log(err);
   });
 
+  gutil.log('move');
   gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
 
+  gutil.log('add/commit');
+  gulp.src('./*')
+    .pipe(git.add())
+    .pipe(git.commit('auto-deploy'));
+
+  gutil.log('push');
   git.push('origin', 'gh-pages', function(err) {
     gutil.log(err);
   });
 
+  gutil.log('checkout master');
   git.checkout('master', function(err) {
     gutil.log(err);
   });
