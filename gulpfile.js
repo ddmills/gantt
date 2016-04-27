@@ -98,7 +98,7 @@ gulp.task('deploy', ['build'], function() {
 
   gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
 
-  gulp.src('./')
+  gulp.src('./*')
     .pipe(git.add())
     .pipe(git.commit('auto-deploy'));
 
@@ -106,9 +106,9 @@ gulp.task('deploy', ['build'], function() {
     gutil.log(err);
   });
 
-  // git.checkout('master', function(err) {
-  //   gutil.log(err);
-  // });
+  git.checkout('master', function(err) {
+    gutil.log(err);
+  });
 });
 
 gulp.task('build', ['sass', 'html', 'transpile']);
