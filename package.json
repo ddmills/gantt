@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Gantt chart",
   "scripts": {
-    "start": "./node_modules/.bin/http-server -c-1",
+    "start": "./node_modules/.bin/gulp build --color && ./node_modules/.bin/http-server -c-1",
+    "build": "./node_modules/.bin/gulp build --color",
+    "watch": "./node_modules/.bin/gulp --color",
+    "serve": "./node_modules/.bin/http-server -c-1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
