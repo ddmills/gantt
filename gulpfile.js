@@ -105,7 +105,7 @@ gulp.task('deploy', ['build'], function() {
   gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
 
   gutil.log('add/commit');
-  gulp.src('./*')
+  gulp.src('.')
     .pipe(git.add())
     .pipe(git.commit('auto-deploy'));
 
