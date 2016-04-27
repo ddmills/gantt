@@ -92,15 +92,15 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', ['build'], function() {
+  gulp.src('./*')
+    .pipe(git.add())
+    .pipe(git.commit('auto-deploy'));
+
   git.checkout('gh-pages', function(err) {
     gutil.log(err);
   });
 
   gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
-
-  gulp.src('./*')
-    .pipe(git.add())
-    .pipe(git.commit('auto-deploy'));
 
   git.push('origin', 'gh-pages', function(err) {
     gutil.log(err);
