@@ -97,6 +97,10 @@ gulp.task('deploy', ['build'], function() {
     gutil.log(err);
   });
 
+  git.merge('master', function(err) {
+    gutil.log(err);
+  });
+
   gutil.log('move');
   gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
 
