@@ -3,6 +3,7 @@
 var
   gulp       = require('gulp'),
   gutil      = require('gulp-util'),
+  git        = require('gulp-git'),
   browserify = require('browserify'),
   babelify   = require('babelify'),
   source     = require('vinyl-source-stream'),
@@ -88,6 +89,27 @@ gulp.task('watch', function() {
   gulp.watch('source/**/*.js', ['transpile']);
   gulp.watch('source/**/*.html', ['html']);
   gulp.watch('source/**/*.scss', ['sass']);
+});
+
+gulp.task('deploy', ['build'], function() {
+  git.checkout('gh-pages', function(err) {
+    gutil.log(err);
+  });
+
+  gulp.src('./public/*')
+    .pipe(gulp.dest('./'));
+
+  gulp.src('./')
+    .pipe(git.add())
+    .pipe(git.commit('auto deploy'));
+
+  git.push('origin', 'gh-pages', function(err) {
+    gutil.log(err);
+  });
+
+  git.checkout('master', function(err) {
+    gutil.log(err);
+  });
 });
 
 gulp.task('build', ['sass', 'html', 'transpile']);
