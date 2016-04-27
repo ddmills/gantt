@@ -82,27 +82,21 @@
     height: 100%;
     text-align: center;
     overflow: hidden;
-    padding: 0px 4px;
+    padding: 0px 8px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.stage:hover .stage-progress {
-    opacity: 1;
+.stage-order-customer {
+
+}
+
+.stage-order-number {
+    color: #777;
 }
 
 .stage:hover .stage-worktype  {
     overflow: visible;
-}
-
-.stage-progress {
-    position: absolute;
-    opacity: 0;
-    left: 100%;
-    width: auto;
-    padding: 0px 5px;
-    color: rgb(29, 84, 149);
-    transition: opacity .1s;
 }
 
 .stage-progress-meter {

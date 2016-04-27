@@ -10,39 +10,38 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <div class="container">
-            <div class="stage-chart">
-                <div class="scale">
-                    <div class="scale-title">
-                    </div>
-                    <div class="timeline-days">
-                        <div class="timeline-day-cell"
-                            v-for="day in dayCells"
-                        >
-                            <span class="timeline-day">
-                                {{ day.format('dddd') }}<br>
-                                {{ day.format('MMMM Do') }}
-                            </span>
-                            <div class="timeline-hours">
-                                <div
-                                    class="timeline-hour-cell"
-                                    v-for="hour in hourCells"
-                                    v-bind:style="hourStyle"
-                                >
-                                    {{ hour }}
-                                </div>
+        <div class="stage-chart">
+            <div class="scale">
+                <div class="scale-title">
+                </div>
+                <div class="timeline-days">
+                    <div class="timeline-day-cell"
+                        v-for="day in dayCells"
+                    >
+                        <span class="timeline-day">
+                            {{ day.format('dddd') }}<br>
+                            {{ day.format('MMMM Do') }}
+                        </span>
+                        <div class="timeline-hours">
+                            <div
+                                class="timeline-hour-cell"
+                                v-for="hour in hourCells"
+                                v-bind:style="hourStyle"
+                            >
+                                {{ hour }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="bay" v-for="bay in bays">
-                    <div class="bay-title">
-                        {{ bay.name }}
-                        <button v-on:click="autoSchedule(bay)" class="btn btn-primary">Sort All</button>
-                    </div>
-                    <div class="stages">
-                        <stage v-for="stage in bay.stages" :stage="stage"></stage>
-                    </div>
+            </div>
+
+            <div class="bay" v-for="bay in bays">
+                <div class="bay-title">
+                    {{ bay.name }}
+                    <button v-on:click="autoSchedule(bay)" class="btn btn-primary">Sort All</button>
+                </div>
+                <div class="stages">
+                    <stage v-for="stage in bay.stages" :stage="stage"></stage>
                 </div>
             </div>
         </div>
@@ -50,8 +49,8 @@
         <script type="x/template" id="stage-template">
             <div class="stage-row">
                 <div class="stage-info">
-                    {{ stage.customer }}<br>
-                    #{{ stage.orderNo }}
+                    <span class="stage-order-customer">{{ stage.customer }}</span><br>
+                    <span class="stage-order-number">#{{ stage.orderNo }}</span>
                 </div>
                 <div class="stage-timeline">
                     <div
@@ -64,9 +63,6 @@
                         v-on:dragend="dragEnd"
                         draggable="true"
                     >
-                        <span class="stage-progress">
-                            {{ progress }}%
-                        </span>
                         <span class="stage-worktype">
                             {{ stage.workType }}
                         </span>
