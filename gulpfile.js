@@ -3,7 +3,7 @@
 var
   gulp       = require('gulp'),
   gutil      = require('gulp-util'),
-  git        = require('gulp-git'),
+  deploy     = require('gulp-gh-pages'),
   browserify = require('browserify'),
   babelify   = require('babelify'),
   source     = require('vinyl-source-stream'),
@@ -92,32 +92,8 @@ gulp.task('watch', function() {
 });
 
 gulp.task('deploy', ['build'], function() {
-  gutil.log('checkout');
-  git.checkout('gh-pages', function(err) {
-    gutil.log(err);
-  });
-
-  git.merge('master', function(err) {
-    gutil.log(err);
-  });
-
-  gutil.log('move');
-  gulp.src('./public/*').pipe(gulp.dest('./', { overwrite: true }));
-
-  gutil.log('add/commit');
-  gulp.src('.')
-    .pipe(git.add())
-    .pipe(git.commit('auto-deploy'));
-
-  gutil.log('push');
-  git.push('origin', 'gh-pages', function(err) {
-    gutil.log(err);
-  });
-
-  gutil.log('checkout master');
-  git.checkout('master', function(err) {
-    gutil.log(err);
-  });
+  return gulp.src('./public/**/*')
+    .pipe(deploy());
 });
 
 gulp.task('build', ['sass', 'html', 'transpile']);
