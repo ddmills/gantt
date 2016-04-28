@@ -5,6 +5,7 @@
   "scripts": {
     "start": "./node_modules/.bin/gulp build --color && ./node_modules/.bin/http-server -c-1",
     "build": "./node_modules/.bin/gulp build --color",
+    "deploy": "./node_modules/.bin/gulp deploy --color",
     "watch": "./node_modules/.bin/gulp --color",
     "serve": "./node_modules/.bin/http-server -c-1",
     "test": "echo \"Error: no test specified\" && exit 1"
