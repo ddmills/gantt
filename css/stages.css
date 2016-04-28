@@ -1,0 +1,111 @@
+.stages {
+  display: table-cell;
+  position: relative;
+  height: 100%;
+  border-left: 1px solid #cac8bd;
+  overflow: hidden;
+  width: auto; }
+
+.stage-row {
+  display: table;
+  width: 100%; }
+
+.stage-timeline {
+  display: table-cell;
+  position: relative;
+  width: auto;
+  height: 58px; }
+
+.stage-row:not(:last-child) .stage-timeline {
+  border-bottom: 1px dashed #E2E2E2; }
+
+.stage-info {
+  position: relative;
+  display: table-cell;
+  width: 200px;
+  max-width: 200px;
+  height: 100%;
+  border-right: 1px solid #cac8bd;
+  background-color: #efefef;
+  font-size: 18px;
+  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 300; }
+
+.stage-row:not(:last-child) .stage-info {
+  border-bottom: 1px solid #cac8bd; }
+
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10%;
+  height: 50px;
+  line-height: 50px;
+  margin: 4px 0px;
+  font-size: 18px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: visible; }
+
+.stage-worktype {
+  z-index: 100;
+  position: relative;
+  display: block;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+  padding: 0px 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.stage-order-number {
+  color: #777; }
+
+.stage:hover .stage-worktype {
+  overflow: visible; }
+
+.stage-progress-meter {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.stage-status-pending {
+  background-color: #f2f4d0;
+  border-color: #d0d754;
+  color: #464646; }
+  .stage-status-pending .stage-progress-meter {
+    background-color: rgba(231, 234, 167, 0.75); }
+
+.stage-status-started {
+  background-color: #e0eede;
+  border-color: #81ba79;
+  color: #1b1357; }
+  .stage-status-started .stage-progress-meter {
+    background-color: rgba(192, 221, 188, 0.75); }
+
+.stage-status-ready {
+  background-color: #eedbe8;
+  border-color: #bd73a6;
+  color: #3d1717; }
+  .stage-status-ready .stage-progress-meter {
+    background-color: rgba(222, 184, 210, 0.75); }
+
+.stage-status-active {
+  background-color: #359435;
+  border-color: #0d230d;
+  color: #ecf9ed; }
+  .stage-status-active .stage-progress-meter {
+    background-color: rgba(40, 110, 40, 0.75); }
+
+.stage-status-scheduled {
+  background-color: #f5f6f6;
+  border-color: #a4aeae;
+  color: #1f3262; }
+  .stage-status-scheduled .stage-progress-meter {
+    background-color: rgba(218, 222, 222, 0.75); }
