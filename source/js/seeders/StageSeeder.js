@@ -82,16 +82,14 @@ module.exports = class StageSeeder
             `Roper Pump Install At rear`
         ];
 
+        var start = moment("2016-07-11", "YYYY-MM-DD").startOf('day').hour(8);
+
         for (var i = 0; i < num; i++) {
             var hour = underscore.random(0, 8 * 3);
             var duration = underscore.random(4, 8);
             var stageNo = underscore.random(1, 8);
             var status = underscore.sample(statuses);
             var workType = underscore.sample(workTypes);
-
-            var startDate = business.nextWorkingDay(moment().add(-1, 'days')).startOf('day').hour(8);
-            startDate = business.addWorkingTime(startDate, hour, 'hours');
-
             var progress = 0;
 
             if (status == 'active') {
@@ -101,7 +99,7 @@ module.exports = class StageSeeder
             if (status == 'active' || status == 'started') progress = underscore.random(1, duration - 1);
 
             var stage = new Stage({
-                startDate: startDate,
+                startDate: start,
                 lockStartDate: false,
                 duration: duration,
                 orderNo: faker.random.number(),
@@ -113,8 +111,55 @@ module.exports = class StageSeeder
                 bay: attributes.bay
             });
 
+            start = business.addWorkingTime(start.clone(), duration, 'hours');
             stages.push(stage);
         }
+        return stages;
+    }
+
+    seedBay3(bay)
+    {
+        var stages = [];
+
+        stages.push(new Stage({
+            startDate: moment("2016-07-11", "YYYY-MM-DD").startOf('day').hour(8),
+            lockStartDate: false,
+            duration: 8,
+            orderNo: '000016',
+            customer: 'LLL Transport',
+            workType: 'Chassis DOT',
+            progress: 3,
+            stageNo: 1,
+            status: 'ready',
+            bay: bay
+        }));
+
+        stages.push(new Stage({
+            startDate: moment("2016-07-11", "YYYY-MM-DD").startOf('day').hour(8),
+            lockStartDate: false,
+            duration: 16,
+            orderNo: '000016',
+            customer: 'LLL Transport',
+            workType: 'Bottom Load Conversion',
+            progress: 12,
+            stageNo: 2,
+            status: 'scheduled',
+            bay: bay
+        }));
+
+        stages.push(new Stage({
+            startDate: moment("2016-07-12", "YYYY-MM-DD").startOf('day').hour(8),
+            lockStartDate: false,
+            duration: 8,
+            orderNo: '000003',
+            customer: 'G3 PRICE CHECK',
+            workType: 'Blower Install',
+            progress: 0,
+            stageNo: 5,
+            status: 'ready',
+            bay: bay
+        }));
+
         return stages;
     }
 }

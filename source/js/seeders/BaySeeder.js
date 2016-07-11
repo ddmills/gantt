@@ -13,22 +13,36 @@ module.exports = class BaySeeder
         this.stageSeeder = new StageSeeder();
     }
 
-    seed(num = 4)
+    seed(num = 3)
     {
         var bays = [];
 
-        for (var i = 0; i < num; i++) {
-            var bay = new Bay({
-                'shop': 'Service',
-                'name': `Bay-${i + 1}`,
-                'technicianCount': 1
-            });
+        var bay = new Bay({
+            'shop': 'Service',
+            'name': `Bay: 1`,
+            'technicianCount': 1
+        });
 
-            var stageCount = underscore.random(3, 8);
+        bay.stages = this.stageSeeder.seed(5, {'bay': bay});
+        bays.push(bay);
 
-            bay.stages = this.stageSeeder.seed(stageCount, {'bay': bay});
-            bays.push(bay);
-        }
+        var bay = new Bay({
+            'shop': 'Service',
+            'name': `Bay: 3`,
+            'technicianCount': 1
+        });
+
+        bay.stages = this.stageSeeder.seedBay3(bay);
+        bays.push(bay);
+
+        var bay = new Bay({
+            'shop': 'Service',
+            'name': `Bay: Service Outside`,
+            'technicianCount': 1
+        });
+
+        bay.stages = this.stageSeeder.seed(4, {'bay': bay});
+        bays.push(bay);
 
         return bays;
     }

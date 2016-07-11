@@ -16,7 +16,7 @@ var business = Business.createInstance(moment,{
 });
 
 var baySeeder = new BaySeeder();
-var bays = baySeeder.seed(3);
+var bays = baySeeder.seed();
 
 Vue.component('stage', {
     props: ['stage', 'style', 'progress', 'clickOffset'],
